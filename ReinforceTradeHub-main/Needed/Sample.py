@@ -489,9 +489,7 @@ def get_opening_prices(stock_list, date):
 
 
 def run_backtest(model, stock_list, start_date_str, end_date_str, initial_balance=10000):
-    
-    
-    
+        
     # Remove 'UTX' if present in the stock list
     stock_list = [stock for stock in stock_list if stock != "UTX"]
     num_stocks = len(stock_list)
@@ -579,6 +577,24 @@ def run_backtest(model, stock_list, start_date_str, end_date_str, initial_balanc
         print(f"Stock: {stock_list[i]}, Final Holdings: {holdings[i]}")
 
     return portfolio_values
+
+def calculate_sharpe_ratio(returns, risk_free_rate):
+    # Calculate the excess returns by subtracting the risk-free rate
+    excess_returns = returns - risk_free_rate
+    
+    # Calculate the average of the excess returns
+    avg_excess_return = np.mean(excess_returns)
+    
+    # Calculate the standard deviation of the excess returns
+    std_dev_excess_return = np.std(excess_returns)
+    
+    # If the standard deviation is zero, return 0 to avoid division by zero
+    if std_dev_excess_return == 0:
+        return 0
+    
+    # Calculate and return the Sharpe ratio
+    sharpe_ratio = avg_excess_return / std_dev_excess_return
+    return sharpe_ratio
 
 if __name__ == "__main__":
     main()
