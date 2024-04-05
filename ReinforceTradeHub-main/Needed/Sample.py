@@ -1,10 +1,19 @@
 
+import csv
 import pandas as pd
 import numpy as np
-
-import yfinance as yf
-
-import gym
+import yfinance as yf # type: ignore
+import gym # type: ignore
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import torch.nn.functional as F
+from collections import namedtuple
+import random
+from tqdm import tqdm # type: ignore
+import os
+import matplotlib.pyplot as plt
+from datetime import datetime, timedelta
 
 
 
@@ -33,8 +42,7 @@ for i,stock in enumerate(dow_30_list):
 del hist_daily_data["UTX"]
 
 
-import numpy as np
-import gym
+
 
 class CustomActionSpace(gym.Space):
     def __init__(self, low, high):
@@ -211,16 +219,6 @@ for _ in range(3):
 env.close()
 
 
-
-import numpy as np
-import gym
-import torch
-import torch.nn as nn
-import torch.optim as optim
-import torch.nn.functional as F
-from collections import namedtuple
-import random
-
 # Define the DQN Model
 class DQN(nn.Module):
     def __init__(self, input_dim, output_dim):
@@ -354,9 +352,10 @@ print(input_dim)
 output_dim = sum(env.action_space.nvec)
 print(output_dim)
 
+model_path = 'ReinforceTradeHub-main/Needed/policy_model.pth'
+target_model_path = 'ReinforceTradeHub-main/Needed/target_model.pth'
 
 
-from tqdm import tqdm
 def main():
     # Create the stock trading environment
     
@@ -381,60 +380,205 @@ def main():
 
     # Initialize replay buffer
     replay_buffer = ReplayBuffer(replay_buffer_capacity)
-    # Training loop
-    epsilon = epsilon_start
-    for episode in tqdm(range(num_episodes)):
+
+    if os.path.isfile(model_path) and os.path.isfile(target_model_path):
+        print("Loading existing models...")
+        model.load_state_dict(torch.load(model_path))
+        target_model.load_state_dict(torch.load(target_model_path))
+    else:
+        print("Training new models...")
+        # Training loop
+        epsilon = epsilon_start
+        for episode in tqdm(range(num_episodes)):
+            state = env.reset()
+            total_reward = 0
+
+            while True:
+                action, exp = select_action(state, epsilon, model, env.action_space)
+                next_state, reward, done, _ = env.step(action)
+                replay_buffer.push(state, action, next_state, reward, done)
+                state = next_state
+                total_reward += reward
+
+                train_dqn(env, model, target_model, optimizer, replay_buffer, batch_size, gamma)
+
+                portfolio_value = np.sum(env.current_prices * env.holdings) + env.balance
+
+                if done:
+                    break
+
+            if episode % target_update_freq == 0:
+                target_model.load_state_dict(model.state_dict())
+
+            epsilon = max(epsilon_end, epsilon * epsilon_decay)
+
+            if(portfolio_value > 10000):
+                print("*****************************")
+            print(f"Episode {episode + 1}, Total Reward: {total_reward}, Portfolio_Value: {portfolio_value}")
+
+        # Save the trained model
+        torch.save(model.state_dict(), model_path)
+        torch.save(target_model.state_dict(), target_model_path)
+    
+    # Parameters for backtesting
+    start_date_str = "2010-01-01"  
+    end_date_str = "2010-12-31"  
+    initial_balance = 10000  
+    stock_list = ["MMM","AXP","AAPL","BA","CAT",
+               "CVX","CSCO","KO","DIS","DD",
+               "XOM","GE","GS","HD","IBM",
+               "INTC","JNJ","JPM","MCD","MRK",
+               "MSFT","NKE","PFE","PG","TRV", "UTX",
+               "UNH","VZ","V","WMT"] 
+    
+    
+    # Run backtesting
+    model.eval()
+    portfolio_values = run_backtest(model, stock_list, start_date_str, end_date_str)
+
+    plt.figure(figsize=(10, 6))
+    plt.plot(portfolio_values, label='Portfolio Value')
+    plt.title('Portfolio Value Over Time')
+    plt.xlabel('Time')
+    plt.ylabel('Value')
+    plt.legend()
+    plt.show()
+
+def fetch_stock_data(stock_list, start_date, end_date):
+    """
+    Fetches adjusted close prices for the given list of stocks.
+    """
+    data = yf.download(stock_list, start=start_date, end=end_date)
+    return data['Close']
+
+def execute_buy(balance, current_prices, quantity, price):
+    cost = quantity * price
+    if balance >= cost:
+        balance -= cost
+        return balance, quantity
+    else:
+        # Not enough balance to buy the intended quantity
+        buyable_quantity = balance // price
+        balance -= buyable_quantity * price
+        return balance, buyable_quantity
+
+def execute_sell(balance, holdings, quantity, price):
+    balance += quantity * price
+    holdings -= quantity
+    return balance, holdings
+
+# Function to calculate the total initial portfolio value
+def calculate_initial_portfolio_value(holdings, opening_prices, initial_balance):
+    initial_holdings_value = np.sum(np.array(holdings) * np.array(opening_prices))
+    total_initial_portfolio_value = initial_balance + initial_holdings_value
+    return total_initial_portfolio_value
+
+# Function to get the opening prices for a list of stocks on a specific date
+def get_opening_prices(stock_list, date):
+    try:
+        data = yf.download(stock_list, start=date, end=date + timedelta(days=1))
+        if not data.empty:
+            opening_prices = data['Open'].iloc[0].values
+            return opening_prices
+        else:
+            print("No data returned for the given date.")
+            return None
+    except Exception as e:
+        print(f"Failed to download stock data: {e}")
+        return None
 
 
-        state = env.reset()
-        total_reward = 0
+def run_backtest(model, stock_list, start_date_str, end_date_str, initial_balance=10000):
+    
+    
+    
+    # Remove 'UTX' if present in the stock list
+    stock_list = [stock for stock in stock_list if stock != "UTX"]
+    num_stocks = len(stock_list)
+    
+    opening_prices = get_opening_prices(stock_list, datetime.strptime(start_date_str, '%Y-%m-%d'))
 
-        while True:
+    # Fetch historical data
+    historical_data = fetch_stock_data(stock_list, start_date_str, end_date_str)
 
-            # Get Action
-            action, exp = select_action(state, epsilon, model, env.action_space)
+    balance = initial_balance
+    holdings = np.zeros(len(stock_list))
+    num_non_zero_holdings = np.random.randint(8, 25) 
+    non_zero_indices = np.random.choice(num_stocks, num_non_zero_holdings, replace=False)
+    for index in non_zero_indices:
+        holdings[index] = np.random.randint(1, 7)
+    for i in range(num_stocks):
+        print(f"Stock: {stock_list[i]}, Initial Holdings: {holdings[i]}")
 
-            # Get Next State and Reward
-            next_state, reward, done, _ = env.step(action)
+    if opening_prices is not None:
+        initial_portfolio_value = calculate_initial_portfolio_value(holdings, opening_prices, initial_balance)
+        print(f"Total Initial Portfolio Value: ${initial_portfolio_value}")
+    else:
+        print("Skipping portfolio value calculation due to missing data.")
 
-            # Push to Replay Buffer
-            replay_buffer.push(state, action, next_state, reward, done)
-            
-            # Update Next State
-            state = next_state
-            total_reward += reward
+    portfolio_values = []
+    total_buys = 0
+    total_sells = 0
+    transaction_history = []
 
-            # print(env.current_step)
+    for date, prices in historical_data.iterrows():
+        current_prices = prices.values
+        state = np.concatenate([[balance], holdings, current_prices])
 
-            # train DQN/Update Q Values
-            train_dqn(env, model, target_model, optimizer, replay_buffer, batch_size, gamma)
+        # Convert state to tensor and get action from the model
+        state_tensor = torch.FloatTensor(state).unsqueeze(0)
+        with torch.no_grad():
+            action_scores = model(state_tensor)
+        actions = action_scores.argmax(1).numpy()  # Simplified action selection
 
-            portfolio_value = np.sum(env.current_prices * env.holdings) + env.balance
+        # Execute actions: For simplicity, buy/sell a single unit or hold
+        for i, action in enumerate(actions):
+            if action == 2 and balance >= current_prices[i]:  # Buy
+                holdings[i] += 1
+                balance -= current_prices[i]
+                total_buys += 1
+            elif action == 0 and holdings[i] > 0:  # Sell
+                holdings[i] -= 1
+                balance += current_prices[i]
+                total_sells += 1
 
-            if done:
-                break
+            transaction_history.append({
+                'date': date.strftime('%Y-%m-%d'),
+                'action': 'buy' if action == 2 else 'sell' if action == 0 else 'hold',
+                'stock': stock_list[i],
+                'price': current_prices[i],
+                'quantity': 1 if action in [0, 2] else 0
+            })
+
+        
+        final_holdings_value = np.sum(holdings * current_prices)
+        final_balance = balance
+        print(f"Final cash balance: ${final_balance}")
+        print(f"Value of final stock holdings: ${final_holdings_value}")
+        print(f"Total buys: {total_buys}")
+        print(f"Total sells: {total_sells}")
 
 
-        # Update target network every target_update_freq episodes
-        if episode % target_update_freq == 0:
-            target_model.load_state_dict(model.state_dict())
+        log_file_name = f"transaction_history.csv"
+        with open(log_file_name, mode='w', newline='') as file:
+            fieldnames = ['date', 'action', 'stock', 'price', 'quantity']
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
 
-        # Decay epsilon
-        epsilon = max(epsilon_end, epsilon * epsilon_decay)
+            writer.writeheader()
 
-        if(portfolio_value > 10000):
-            print("*****************************")
-        print(f"Episode {episode + 1}, Total Reward: {total_reward}, Portfolio_Value: {portfolio_value}")
+            for transaction in transaction_history:
+                writer.writerow(transaction)
+                
+            print(f"Transaction history saved to {log_file_name}")
+            transaction_history.clear()
+        
+        # Update portfolio value
+        portfolio_value = balance + np.sum(holdings * current_prices)
+        portfolio_values.append(portfolio_value)
+    for i in range(num_stocks):
+        print(f"Stock: {stock_list[i]}, Final Holdings: {holdings[i]}")
 
-    # After training, use the trained model for inference
-
-
-    # saving the trained model
-    torch.save(model.state_dict(),'policy_model.pth')
-
-    # saving the model to resume training where we stopped
-    torch.save(target_model.state_dict(),'target_model.pth')
-
+    return portfolio_values
 
 if __name__ == "__main__":
     main()
