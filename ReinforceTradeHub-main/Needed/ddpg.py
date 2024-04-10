@@ -343,8 +343,8 @@ def train_ddpg(env, state_dim, action_dim, episodes, batch_size=128, capacity=10
         print(f"Episode {episode}, Reward: {episode_reward}")
         
         # Optionally, save your models here using torch.save
-        torch.save(actor.state_dict(), '/home/mohit.y/RL-Finance/actor.pth')
-        torch.save(critic.state_dict(), '/home/mohit.y/RL-Finance/critic.pth')
+        torch.save(actor.state_dict(), actor_path)
+        torch.save(critic.state_dict(), critic_path)
 
 def run_inference(actor, env, num_episodes=10):
     """
