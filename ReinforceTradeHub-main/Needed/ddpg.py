@@ -762,4 +762,4 @@ def calculate_sharpe_ratio(returns, risk_free_rate):
     return sharpe_ratio
 
 if __name__ == "__main__":
-    main
+    main_ddpg()
