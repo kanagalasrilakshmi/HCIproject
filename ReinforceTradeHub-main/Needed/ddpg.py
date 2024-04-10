@@ -15,6 +15,7 @@ import os
 import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 from collections import namedtuple, deque
+from tqdm import tqdm
 
 
 
@@ -181,17 +182,17 @@ class StockTradingEnvironment(gym.Env):
         reward = portfolio_value_at_s0 - portfolio_value_at_s
 
         
-        print(f"Initial Balance: ${portfolio_value_at_s}")
+        # print(f"Initial Balance: ${portfolio_value_at_s}")
 
-        print(f"Selling Orders: {len(selling_orders)}, ${total_selling}")
-        print(f"Buying Orders: {len(buying_orders)}, ${total_buying}")
+        # print(f"Selling Orders: {len(selling_orders)}, ${total_selling}")
+        # print(f"Buying Orders: {len(buying_orders)}, ${total_buying}")
 
         
-        print(f"Final Balance: ${self.balance}")
+        # print(f"Final Balance: ${self.balance}")
 
-        print(f"Balance the next day: ${portfolio_value_at_s0}")
+        # print(f"Balance the next day: ${portfolio_value_at_s0}")
 
-        print(f"Reward: ${reward}")
+        # print(f"Reward: ${reward}")
 
         # Return the new observation, reward, whether the episode is done, and additional information
         return self._get_observation(), reward, done, {}
@@ -270,9 +271,16 @@ def update_target_network(target, source, tau=0.005):
     for target_param, param in zip(target.parameters(), source.parameters()):
         target_param.data.copy_(tau*param.data + (1.0-tau)*target_param.data)
 
-def train_ddpg(env, state_dim, action_dim, episodes, batch_size=128, capacity=10000, gamma=0.99):
+def train_ddpg(env, state_dim, action_dim, episodes, batch_size=128, capacity=10000, gamma=0.99, resume_training = False):
+    actor_path = "/home/mohit.y/RL-Finance/actor.pth"
+    critic_path = "/home/mohit.y/RL-Finance/critic.pth"
+
     actor = Actor(state_dim, action_dim)
     critic = Critic(state_dim + action_dim, 1)  # Ensure critic input dim is state + action
+    if os.path.isfile(actor_path) and os.path.isfile(critic_path):
+        print("Loading existing models...")
+        actor.load_state_dict(torch.load(actor_path))
+        critic.load_state_dict(torch.load(critic_path))
     target_actor = Actor(state_dim, action_dim)
     target_critic = Critic(state_dim + action_dim, 1)
     target_actor.load_state_dict(actor.state_dict())
@@ -283,7 +291,7 @@ def train_ddpg(env, state_dim, action_dim, episodes, batch_size=128, capacity=10
 
     replay_buffer = ReplayBufferDDPG(capacity)
 
-    for episode in range(episodes):
+    for episode in tqdm(range(episodes), desc="Training Episodes"):
         state = env.reset()
         episode_reward = 0
 
@@ -334,9 +342,9 @@ def train_ddpg(env, state_dim, action_dim, episodes, batch_size=128, capacity=10
 
         print(f"Episode {episode}, Reward: {episode_reward}")
         
-    # Optionally, save your models here using torch.save
-    # torch.save(actor.state_dict(), 'actor.pth')
-    # torch.save(critic.state_dict(), 'critic.pth')
+        # Optionally, save your models here using torch.save
+        torch.save(actor.state_dict(), '/home/mohit.y/RL-Finance/actor.pth')
+        torch.save(critic.state_dict(), '/home/mohit.y/RL-Finance/critic.pth')
 
 def run_inference(actor, env, num_episodes=10):
     """
@@ -512,13 +520,14 @@ def main_ddpg():
     batch_size = 128
     capacity = 100000
     gamma = 0.99
+    resume_training = True
 
     # Environment setup
     env = StockTradingEnvironment(hist_daily_data)
     state_dim = env.observation_space.shape[0]
     action_dim = len(env.action_space.low)  # Assuming action space is symmetric
     # Train DDPG
-    train_ddpg(env, state_dim, action_dim, episodes, batch_size, capacity, gamma)
+    train_ddpg(env, state_dim, action_dim, episodes, batch_size, capacity, gamma, resume_training)
 
 
 def main():
