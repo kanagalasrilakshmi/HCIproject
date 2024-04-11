@@ -421,8 +421,8 @@ def main():
         torch.save(target_model.state_dict(), target_model_path)
     
     # Parameters for backtesting
-    start_date_str = "2010-01-01"  
-    end_date_str = "2010-12-31"  
+    start_date_str = "2016-01-01"  
+    end_date_str = "2018-08-30"  
     initial_balance = 10000  
     stock_list = ["MMM","AXP","AAPL","BA","CAT",
                "CVX","CSCO","KO","DIS","DD",
@@ -434,7 +434,7 @@ def main():
     
     # Run backtesting
     model.eval()
-    portfolio_values = run_backtest(model, stock_list, start_date_str, end_date_str)
+    portfolio_values = run_backtest(model, stock_list, start_date_str, end_date_str,initial_balance)
 
     plt.figure(figsize=(10, 6))
     plt.plot(portfolio_values, label='Portfolio Value')
@@ -444,12 +444,14 @@ def main():
     plt.legend()
     plt.show()
 
-def fetch_stock_data(stock_list, start_date, end_date):
-    """
-    Fetches adjusted close prices for the given list of stocks.
-    """
-    data = yf.download(stock_list, start=start_date, end=end_date)
-    return data['Close']
+
+def fetch_stock_data(stock_list, start_date_str, end_date_str):
+    data = {}
+    for stock in stock_list:
+        ticker = yf.Ticker(stock)
+        hist = ticker.history(start=start_date_str, end=end_date_str)
+        data[stock] = hist['Close']
+    return pd.DataFrame(data)
 
 def execute_buy(balance, current_prices, quantity, price):
     cost = quantity * price
@@ -469,131 +471,103 @@ def execute_sell(balance, holdings, quantity, price):
 
 # Function to calculate the total initial portfolio value
 def calculate_initial_portfolio_value(holdings, opening_prices, initial_balance):
-    initial_holdings_value = np.sum(np.array(holdings) * np.array(opening_prices))
+    initial_holdings_value = sum(holdings[stock] * price for stock, price in opening_prices.items() if price != 0)
     total_initial_portfolio_value = initial_balance + initial_holdings_value
     return total_initial_portfolio_value
 
-# Function to get the opening prices for a list of stocks on a specific date
-def get_opening_prices(stock_list, date):
-    try:
-        data = yf.download(stock_list, start=date, end=date + timedelta(days=1))
-        if not data.empty:
-            opening_prices = data['Open'].iloc[0].values
-            return opening_prices
-        else:
-            print("No data returned for the given date.")
-            return None
-    except Exception as e:
-        print(f"Failed to download stock data: {e}")
-        return None
+
+def get_opening_prices(hist_data, stock_list, date):
+    opening_prices = {}
+    for stock in stock_list:
+        if date in hist_data[stock].index:
+            opening_prices[stock] = hist_data[stock].loc[date, 'Open']
+    return opening_prices
 
 
 def run_backtest(model, stock_list, start_date_str, end_date_str, initial_balance=10000):
-        
-    # Remove 'UTX' if present in the stock list
     stock_list = [stock for stock in stock_list if stock != "UTX"]
-    num_stocks = len(stock_list)
-    
-    opening_prices = get_opening_prices(stock_list, datetime.strptime(start_date_str, '%Y-%m-%d'))
-
-    # Fetch historical data
+    # Prepare historical data
     historical_data = fetch_stock_data(stock_list, start_date_str, end_date_str)
-
+    
+    # Initial setup
     balance = initial_balance
-    holdings = np.zeros(len(stock_list))
-    num_non_zero_holdings = np.random.randint(8, 25) 
-    non_zero_indices = np.random.choice(num_stocks, num_non_zero_holdings, replace=False)
-    for index in non_zero_indices:
-        holdings[index] = np.random.randint(1, 7)
-    for i in range(num_stocks):
-        print(f"Stock: {stock_list[i]}, Initial Holdings: {holdings[i]}")
-
-    if opening_prices is not None:
-        initial_portfolio_value = calculate_initial_portfolio_value(holdings, opening_prices, initial_balance)
-        print(f"Total Initial Portfolio Value: ${initial_portfolio_value}")
-    else:
-        print("Skipping portfolio value calculation due to missing data.")
-
+    holdings = {stock: 0 for stock in stock_list}
+    total_buys = total_sells = total_holds = 0
     portfolio_values = []
-    total_buys = 0
-    total_sells = 0
-    transaction_history = []
 
-    for date, prices in historical_data.iterrows():
-        current_prices = prices.values
-        state = np.concatenate([[balance], holdings, current_prices])
+    print("Initial Balance:", balance)
+    print("Initial Holdings:", holdings)
 
-        # Convert state to tensor and get action from the model
+    for date, row in historical_data.iterrows():
+        current_prices = row.to_dict()
+
+        # Generate state for the model
+        state = np.array([balance] + [holdings[stock] for stock in stock_list] + [current_prices[stock] for stock in stock_list])
         state_tensor = torch.FloatTensor(state).unsqueeze(0)
+
+        # Model prediction
         with torch.no_grad():
-            action_scores = model(state_tensor)
-        actions = action_scores.argmax(1).numpy()  # Simplified action selection
+            action_values = model(state_tensor)
+            actions = action_values.squeeze(0).numpy()
 
-        # Execute actions: For simplicity, buy/sell a single unit or hold
-        for i, action in enumerate(actions):
-            if action == 2 and balance >= current_prices[i]:  # Buy
-                holdings[i] += 1
-                balance -= current_prices[i]
+        # Execute actions
+        for i, stock in enumerate(stock_list):
+            action = actions[i]
+            if action > 0 and balance >= current_prices[stock]:  # Buy action
+                shares_to_buy = int(balance // current_prices[stock])
+                balance -= shares_to_buy * current_prices[stock]
+                holdings[stock] += shares_to_buy
                 total_buys += 1
-            elif action == 0 and holdings[i] > 0:  # Sell
-                holdings[i] -= 1
-                balance += current_prices[i]
+            elif action < 0 and holdings[stock] > 0:  # Sell action
+                shares_to_sell = holdings[stock]
+                balance += shares_to_sell * current_prices[stock]
+                holdings[stock] = 0
                 total_sells += 1
+            else:  # Hold action
+                total_holds += 1
 
-            transaction_history.append({
-                'date': date.strftime('%Y-%m-%d'),
-                'action': 'buy' if action == 2 else 'sell' if action == 0 else 'hold',
-                'stock': stock_list[i],
-                'price': current_prices[i],
-                'quantity': 1 if action in [0, 2] else 0
-            })
-
-        
-        final_holdings_value = np.sum(holdings * current_prices)
-        final_balance = balance
-        print(f"Final cash balance: ${final_balance}")
-        print(f"Value of final stock holdings: ${final_holdings_value}")
-        print(f"Total buys: {total_buys}")
-        print(f"Total sells: {total_sells}")
-
-
-        log_file_name = f"transaction_history.csv"
-        with open(log_file_name, mode='w', newline='') as file:
-            fieldnames = ['date', 'action', 'stock', 'price', 'quantity']
-            writer = csv.DictWriter(file, fieldnames=fieldnames)
-
-            writer.writeheader()
-
-            for transaction in transaction_history:
-                writer.writerow(transaction)
-                
-            print(f"Transaction history saved to {log_file_name}")
-            transaction_history.clear()
-        
         # Update portfolio value
-        portfolio_value = balance + np.sum(holdings * current_prices)
+        portfolio_value = balance + sum(holdings[stock] * current_prices[stock] for stock in stock_list)
         portfolio_values.append(portfolio_value)
-    for i in range(num_stocks):
-        print(f"Stock: {stock_list[i]}, Final Holdings: {holdings[i]}")
+
+    # After trading period
+
+    # After trading period
+    print("Final Balance:", balance)
+    print("Final Holdings:", holdings)
+    print("Total Buys:", total_buys)
+    print("Total Sells:", total_sells)
+    print("Total Holds:", total_holds)
+
+    # Calculate Sharpe Ratio
+    daily_returns = np.diff(portfolio_values) / portfolio_values[:-1]
+    risk_free_rate_daily = (1 + 0.03) ** (1/252) - 1  # 3% risk-free rate
+    annual_return = ((portfolio_values[-1] / portfolio_values[0]) ** (1/2.6)) -1
+    print(f"Annual Return: {annual_return:.2%}")
+    print(risk_free_rate_daily)
+    sharpe_ratio = calculate_sharpe_ratio(daily_returns, risk_free_rate_daily)
+
+    print(f"Final Portfolio Value: ${portfolio_values[-1]:.2f}")
+    print(f"Sharpe Ratio: {sharpe_ratio:.2f}")
 
     return portfolio_values
 
+
 def calculate_sharpe_ratio(returns, risk_free_rate):
-    # Calculate the excess returns by subtracting the risk-free rate
-    excess_returns = returns - risk_free_rate
-    
-    # Calculate the average of the excess returns
-    avg_excess_return = np.mean(excess_returns)
-    
-    # Calculate the standard deviation of the excess returns
-    std_dev_excess_return = np.std(excess_returns)
-    
-    # If the standard deviation is zero, return 0 to avoid division by zero
-    if std_dev_excess_return == 0:
-        return 0
-    
-    # Calculate and return the Sharpe ratio
-    sharpe_ratio = avg_excess_return / std_dev_excess_return
+     # Calculate average daily return
+    average_return = np.mean(returns)
+
+    # Calculate daily standard deviation of returns
+    daily_volatility = np.std(returns)
+
+    # Annualize return and volatility by assuming 252 trading days
+    annualized_return = average_return * 252 * 2.6
+    annualized_volatility = daily_volatility * np.sqrt(252*2.6)
+    excess_returns = annualized_return - risk_free_rate
+    sharpe_ratio = excess_returns / annualized_volatility
+    # avg_excess_return = np.mean(excess_returns)
+    # std_dev_excess_return = np.std(excess_returns)
+    # sharpe_ratio = avg_excess_return / std_dev_excess_return if std_dev_excess_return > 0 else 0
     return sharpe_ratio
 
 if __name__ == "__main__":
