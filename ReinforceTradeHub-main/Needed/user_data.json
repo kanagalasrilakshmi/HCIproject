@@ -1,1 +1,839 @@
-{"priyanka": {"password": "priya2024", "portfolios": [{"name": "equity_growth", "balance": 60191.499995117185, "stocks": [{"stock": "AAPL", "quantity": 10.0}, {"stock": "MSFT", "quantity": 12.0}, {"stock": "V", "quantity": 14.0}, {"stock": "NKE", "quantity": 16.0}, {"stock": "BA", "quantity": 1.0}]}, {"name": "safe_haven", "balance": 1.1335755157469976, "stocks": [{"stock": "JNJ", "quantity": 20.0}, {"stock": "PFE", "quantity": 23.0}, {"stock": "PG", "quantity": 24.0}, {"stock": "MMM", "quantity": 11.0}, {"stock": "AXP", "quantity": 60.0}]}, {"name": "p2", "balance": 922.2272872924805, "stocks": [{"stock": "MMM", "quantity": 1.0}]}]}, "arjun": {"password": "arjunFight", "portfolios": [{"name": "tech_leader", "balance": 78999.99, "stocks": [{"stock": "AAPL", "quantity": 18.0}, {"stock": "MSFT", "quantity": 20.0}, {"stock": "IBM", "quantity": 22.0}, {"stock": "INTC", "quantity": 24.0}]}, {"name": "energy_sector", "balance": 20500.21, "stocks": [{"stock": "XOM", "quantity": 30.0}, {"stock": "CVX", "quantity": 32.0}, {"stock": "BA", "quantity": 34.0}]}]}, "sunita": {"password": "suni2024", "portfolios": [{"name": "blue_chip", "balance": 50000.5, "stocks": [{"stock": "JPM", "quantity": 5.0}, {"stock": "GS", "quantity": 7.0}, {"stock": "V", "quantity": 9.0}, {"stock": "WMT", "quantity": 11.0}]}, {"name": "diversified", "balance": 25000.75, "stocks": [{"stock": "DIS", "quantity": 13.0}, {"stock": "MCD", "quantity": 15.0}, {"stock": "NKE", "quantity": 17.0}, {"stock": "PFE", "quantity": 19.0}]}]}, "vijay": {"password": "vijayStrong", "portfolios": [{"name": "high_yield", "balance": 30000.99, "stocks": [{"stock": "KO", "quantity": 21.0}, {"stock": "PG", "quantity": 23.0}, {"stock": "PFE", "quantity": 25.0}, {"stock": "JNJ", "quantity": 27.0}]}, {"name": "growth_potential", "balance": 42000.88, "stocks": [{"stock": "AAPL", "quantity": 29.0}, {"stock": "MSFT", "quantity": 31.0}, {"stock": "V", "quantity": 33.0}, {"stock": "NKE", "quantity": 35.0}]}]}, "deepika": {"password": "deepi2024", "portfolios": [{"name": "global_tech", "balance": 65000.44, "stocks": [{"stock": "AAPL", "quantity": 14.0}, {"stock": "MSFT", "quantity": 16.0}, {"stock": "INTC", "quantity": 18.0}, {"stock": "IBM", "quantity": 20.0}]}, {"name": "consumer_goods", "balance": 22000.11, "stocks": [{"stock": "KO", "quantity": 22.0}, {"stock": "PG", "quantity": 24.0}, {"stock": "PFE", "quantity": 26.0}, {"stock": "WMT", "quantity": 28.0}]}]}, "rahul": {"password": "rahulRocks", "portfolios": [{"name": "value_investing", "balance": 78000.67, "stocks": [{"stock": "JPM", "quantity": 19.0}, {"stock": "GS", "quantity": 21.0}, {"stock": "TRV", "quantity": 23.0}, {"stock": "VZ", "quantity": 25.0}]}, {"name": "sustainable_energy", "balance": 29500.98, "stocks": [{"stock": "XOM", "quantity": 27.0}, {"stock": "CVX", "quantity": 29.0}, {"stock": "BA", "quantity": 31.0}]}]}, "anita": {"password": "anita2024", "portfolios": [{"name": "equity_focus", "balance": 36000.33, "stocks": [{"stock": "AAPL", "quantity": 12.0}, {"stock": "MSFT", "quantity": 14.0}, {"stock": "V", "quantity": 16.0}, {"stock": "NKE", "quantity": 18.0}]}, {"name": "defensive_stocks", "balance": 12000.44, "stocks": [{"stock": "JNJ", "quantity": 20.0}, {"stock": "PFE", "quantity": 22.0}, {"stock": "PG", "quantity": 24.0}, {"stock": "KO", "quantity": 26.0}]}]}, "sanjay": {"password": "sanjay2024", "portfolios": [{"name": "tech_advantage", "balance": 45800.21, "stocks": [{"stock": "AAPL", "quantity": 28.0}, {"stock": "MSFT", "quantity": 30.0}, {"stock": "INTC", "quantity": 32.0}, {"stock": "IBM", "quantity": 34.0}]}, {"name": "energy_focus", "balance": 23400.55, "stocks": [{"stock": "XOM", "quantity": 36.0}, {"stock": "CVX", "quantity": 38.0}, {"stock": "BA", "quantity": 40.0}]}]}, "meera": {"password": "meeraMe2024", "portfolios": [{"name": "balanced_portfolio", "balance": 52000.88, "stocks": [{"stock": "PG", "quantity": 17.0}, {"stock": "JNJ", "quantity": 19.0}, {"stock": "AAPL", "quantity": 21.0}, {"stock": "MSFT", "quantity": 23.0}]}, {"name": "industrial_growth", "balance": 30800.33, "stocks": [{"stock": "CAT", "quantity": 25.0}, {"stock": "BA", "quantity": 27.0}, {"stock": "GE", "quantity": 29.0}, {"stock": "MMM", "quantity": 31.0}]}]}, "rohit": {"password": "rohitPower", "portfolios": [{"name": "fast_growth", "balance": 69000.12, "stocks": [{"stock": "AAPL", "quantity": 24.0}, {"stock": "MSFT", "quantity": 26.0}, {"stock": "V", "quantity": 28.0}, {"stock": "NKE", "quantity": 30.0}]}, {"name": "health_care", "balance": 21500.76, "stocks": [{"stock": "JNJ", "quantity": 32.0}, {"stock": "PFE", "quantity": 34.0}, {"stock": "MRK", "quantity": 36.0}]}]}, "neha": {"password": "neha2024", "portfolios": [{"name": "core_holdings", "balance": 53000.65, "stocks": [{"stock": "JPM", "quantity": 18.0}, {"stock": "GS", "quantity": 20.0}, {"stock": "V", "quantity": 22.0}, {"stock": "WMT", "quantity": 24.0}]}, {"name": "tech_innovation", "balance": 19000.89, "stocks": [{"stock": "AAPL", "quantity": 26.0}, {"stock": "MSFT", "quantity": 28.0}, {"stock": "INTC", "quantity": 30.0}, {"stock": "IBM", "quantity": 32.0}]}]}, "aditya": {"password": "adi2024", "portfolios": [{"name": "sustainable_investing", "balance": 45000.5, "stocks": [{"stock": "XOM", "quantity": 23.0}, {"stock": "CVX", "quantity": 25.0}, {"stock": "NKE", "quantity": 27.0}, {"stock": "AAPL", "quantity": 29.0}]}, {"name": "consumer_focus", "balance": 12000.77, "stocks": [{"stock": "KO", "quantity": 31.0}, {"stock": "PG", "quantity": 33.0}, {"stock": "PFE", "quantity": 35.0}, {"stock": "WMT", "quantity": 37.0}]}]}, "kritika": {"password": "kriti2024", "portfolios": [{"name": "value_investment", "balance": 62000.99, "stocks": [{"stock": "JPM", "quantity": 29.0}, {"stock": "GS", "quantity": 31.0}, {"stock": "VZ", "quantity": 33.0}, {"stock": "TRV", "quantity": 35.0}]}]}}
+{
+    "maya": {
+        "password": "maya123",
+        "portfolios": [
+            {
+                "name": "growth",
+                "balance": 30500.5,
+                "stocks": [
+                    {
+                        "stock": "AAPL",
+                        "quantity": 20.0
+                    },
+                    {
+                        "stock": "MSFT",
+                        "quantity": 15.0
+                    },
+                    {
+                        "stock": "V",
+                        "quantity": 25.0
+                    }
+                ]
+            },
+            {
+                "name": "income",
+                "balance": 15200.77,
+                "stocks": [
+                    {
+                        "stock": "KO",
+                        "quantity": 30.0
+                    },
+                    {
+                        "stock": "PFE",
+                        "quantity": 40.0
+                    }
+                ]
+            }
+        ]
+    },
+    "alex": {
+        "password": "securePass!",
+        "portfolios": [
+            {
+                "name": "tech_focus",
+                "balance": 48922.32,
+                "stocks": [
+                    {
+                        "stock": "AAPL",
+                        "quantity": 50.0
+                    },
+                    {
+                        "stock": "INTC",
+                        "quantity": 60.0
+                    },
+                    {
+                        "stock": "MSFT",
+                        "quantity": 70.0
+                    }
+                ]
+            }
+        ]
+    },
+    "jordan": {
+        "password": "jordan98",
+        "portfolios": [
+            {
+                "name": "diversified",
+                "balance": 78950.15,
+                "stocks": [
+                    {
+                        "stock": "JPM",
+                        "quantity": 15.0
+                    },
+                    {
+                        "stock": "TRV",
+                        "quantity": 20.0
+                    },
+                    {
+                        "stock": "UNH",
+                        "quantity": 25.0
+                    },
+                    {
+                        "stock": "VZ",
+                        "quantity": 30.0
+                    }
+                ]
+            }
+        ]
+    },
+    "sophia": {
+        "password": "sophia2023",
+        "portfolios": [
+            {
+                "name": "high_yield",
+                "balance": 20500.99,
+                "stocks": [
+                    {
+                        "stock": "XOM",
+                        "quantity": 40.0
+                    },
+                    {
+                        "stock": "CVX",
+                        "quantity": 45.0
+                    }
+                ]
+            }
+        ]
+    },
+    "ethan": {
+        "password": "ethanPass",
+        "portfolios": [
+            {
+                "name": "balanced",
+                "balance": 13200.87,
+                "stocks": [
+                    {
+                        "stock": "PG",
+                        "quantity": 20.0
+                    },
+                    {
+                        "stock": "JNJ",
+                        "quantity": 25.0
+                    }
+                ]
+            }
+        ]
+    },
+    "olivia": {
+        "password": "oliv1234",
+        "portfolios": [
+            {
+                "name": "aggressive",
+                "balance": 98765.43,
+                "stocks": [
+                    {
+                        "stock": "GS",
+                        "quantity": 50.0
+                    },
+                    {
+                        "stock": "MSFT",
+                        "quantity": 55.0
+                    }
+                ]
+            }
+        ]
+    },
+    "liam": {
+        "password": "liamPassword",
+        "portfolios": [
+            {
+                "name": "starter",
+                "balance": 15000,
+                "stocks": [
+                    {
+                        "stock": "MCD",
+                        "quantity": 10.0
+                    },
+                    {
+                        "stock": "KO",
+                        "quantity": 15.0
+                    }
+                ]
+            }
+        ]
+    },
+    "emma": {
+        "password": "emma2024",
+        "portfolios": [
+            {
+                "name": "growth",
+                "balance": 45000,
+                "stocks": [
+                    {
+                        "stock": "AAPL",
+                        "quantity": 30.0
+                    },
+                    {
+                        "stock": "V",
+                        "quantity": 35.0
+                    }
+                ]
+            }
+        ]
+    },
+    "noah": {
+        "password": "noahSecure",
+        "portfolios": [
+            {
+                "name": "value",
+                "balance": 22250.75,
+                "stocks": [
+                    {
+                        "stock": "WMT",
+                        "quantity": 20.0
+                    },
+                    {
+                        "stock": "PG",
+                        "quantity": 25.0
+                    }
+                ]
+            }
+        ]
+    },
+    "ava": {
+        "password": "avaPass!",
+        "portfolios": [
+            {
+                "name": "conservative",
+                "balance": 36500.67,
+                "stocks": [
+                    {
+                        "stock": "JNJ",
+                        "quantity": 20.0
+                    },
+                    {
+                        "stock": "PFE",
+                        "quantity": 30.0
+                    }
+                ]
+            }
+        ]
+    },
+    "priyanka": {
+        "password": "priya2024",
+        "portfolios": [
+            {
+                "name": "equity_growth",
+                "balance": 60191.499995117185,
+                "stocks": [
+                    {
+                        "stock": "AAPL",
+                        "quantity": 10.0
+                    },
+                    {
+                        "stock": "MSFT",
+                        "quantity": 12.0
+                    },
+                    {
+                        "stock": "V",
+                        "quantity": 14.0
+                    },
+                    {
+                        "stock": "NKE",
+                        "quantity": 16.0
+                    },
+                    {
+                        "stock": "BA",
+                        "quantity": 1.0
+                    }
+                ]
+            },
+            {
+                "name": "safe_haven",
+                "balance": 1.1335755157469976,
+                "stocks": [
+                    {
+                        "stock": "JNJ",
+                        "quantity": 20.0
+                    },
+                    {
+                        "stock": "PFE",
+                        "quantity": 23.0
+                    },
+                    {
+                        "stock": "PG",
+                        "quantity": 24.0
+                    },
+                    {
+                        "stock": "MMM",
+                        "quantity": 11.0
+                    },
+                    {
+                        "stock": "AXP",
+                        "quantity": 60.0
+                    }
+                ]
+            },
+            {
+                "name": "p2",
+                "balance": 922.2272872924805,
+                "stocks": [
+                    {
+                        "stock": "MMM",
+                        "quantity": 1.0
+                    }
+                ]
+            }
+        ]
+    },
+    "arjun": {
+        "password": "arjunFight",
+        "portfolios": [
+            {
+                "name": "tech_leader",
+                "balance": 78999.99,
+                "stocks": [
+                    {
+                        "stock": "AAPL",
+                        "quantity": 18.0
+                    },
+                    {
+                        "stock": "MSFT",
+                        "quantity": 20.0
+                    },
+                    {
+                        "stock": "IBM",
+                        "quantity": 22.0
+                    },
+                    {
+                        "stock": "INTC",
+                        "quantity": 24.0
+                    }
+                ]
+            },
+            {
+                "name": "energy_sector",
+                "balance": 20500.21,
+                "stocks": [
+                    {
+                        "stock": "XOM",
+                        "quantity": 30.0
+                    },
+                    {
+                        "stock": "CVX",
+                        "quantity": 32.0
+                    },
+                    {
+                        "stock": "BA",
+                        "quantity": 34.0
+                    }
+                ]
+            }
+        ]
+    },
+    "sunita": {
+        "password": "suni2024",
+        "portfolios": [
+            {
+                "name": "blue_chip",
+                "balance": 50000.5,
+                "stocks": [
+                    {
+                        "stock": "JPM",
+                        "quantity": 5.0
+                    },
+                    {
+                        "stock": "GS",
+                        "quantity": 7.0
+                    },
+                    {
+                        "stock": "V",
+                        "quantity": 9.0
+                    },
+                    {
+                        "stock": "WMT",
+                        "quantity": 11.0
+                    }
+                ]
+            },
+            {
+                "name": "diversified",
+                "balance": 25000.75,
+                "stocks": [
+                    {
+                        "stock": "DIS",
+                        "quantity": 13.0
+                    },
+                    {
+                        "stock": "MCD",
+                        "quantity": 15.0
+                    },
+                    {
+                        "stock": "NKE",
+                        "quantity": 17.0
+                    },
+                    {
+                        "stock": "PFE",
+                        "quantity": 19.0
+                    }
+                ]
+            }
+        ]
+    },
+    "vijay": {
+        "password": "vijayStrong",
+        "portfolios": [
+            {
+                "name": "high_yield",
+                "balance": 30000.99,
+                "stocks": [
+                    {
+                        "stock": "KO",
+                        "quantity": 21.0
+                    },
+                    {
+                        "stock": "PG",
+                        "quantity": 23.0
+                    },
+                    {
+                        "stock": "PFE",
+                        "quantity": 25.0
+                    },
+                    {
+                        "stock": "JNJ",
+                        "quantity": 27.0
+                    }
+                ]
+            },
+            {
+                "name": "growth_potential",
+                "balance": 42000.88,
+                "stocks": [
+                    {
+                        "stock": "AAPL",
+                        "quantity": 29.0
+                    },
+                    {
+                        "stock": "MSFT",
+                        "quantity": 31.0
+                    },
+                    {
+                        "stock": "V",
+                        "quantity": 33.0
+                    },
+                    {
+                        "stock": "NKE",
+                        "quantity": 35.0
+                    }
+                ]
+            }
+        ]
+    },
+    "deepika": {
+        "password": "deepi2024",
+        "portfolios": [
+            {
+                "name": "global_tech",
+                "balance": 65000.44,
+                "stocks": [
+                    {
+                        "stock": "AAPL",
+                        "quantity": 14.0
+                    },
+                    {
+                        "stock": "MSFT",
+                        "quantity": 16.0
+                    },
+                    {
+                        "stock": "INTC",
+                        "quantity": 18.0
+                    },
+                    {
+                        "stock": "IBM",
+                        "quantity": 20.0
+                    }
+                ]
+            },
+            {
+                "name": "consumer_goods",
+                "balance": 22000.11,
+                "stocks": [
+                    {
+                        "stock": "KO",
+                        "quantity": 22.0
+                    },
+                    {
+                        "stock": "PG",
+                        "quantity": 24.0
+                    },
+                    {
+                        "stock": "PFE",
+                        "quantity": 26.0
+                    },
+                    {
+                        "stock": "WMT",
+                        "quantity": 28.0
+                    }
+                ]
+            }
+        ]
+    },
+    "rahul": {
+        "password": "rahulRocks",
+        "portfolios": [
+            {
+                "name": "value_investing",
+                "balance": 78000.67,
+                "stocks": [
+                    {
+                        "stock": "JPM",
+                        "quantity": 19.0
+                    },
+                    {
+                        "stock": "GS",
+                        "quantity": 21.0
+                    },
+                    {
+                        "stock": "TRV",
+                        "quantity": 23.0
+                    },
+                    {
+                        "stock": "VZ",
+                        "quantity": 25.0
+                    }
+                ]
+            },
+            {
+                "name": "sustainable_energy",
+                "balance": 29500.98,
+                "stocks": [
+                    {
+                        "stock": "XOM",
+                        "quantity": 27.0
+                    },
+                    {
+                        "stock": "CVX",
+                        "quantity": 29.0
+                    },
+                    {
+                        "stock": "BA",
+                        "quantity": 31.0
+                    }
+                ]
+            }
+        ]
+    },
+    "anita": {
+        "password": "anita2024",
+        "portfolios": [
+            {
+                "name": "equity_focus",
+                "balance": 36000.33,
+                "stocks": [
+                    {
+                        "stock": "AAPL",
+                        "quantity": 12.0
+                    },
+                    {
+                        "stock": "MSFT",
+                        "quantity": 14.0
+                    },
+                    {
+                        "stock": "V",
+                        "quantity": 16.0
+                    },
+                    {
+                        "stock": "NKE",
+                        "quantity": 18.0
+                    }
+                ]
+            },
+            {
+                "name": "defensive_stocks",
+                "balance": 12000.44,
+                "stocks": [
+                    {
+                        "stock": "JNJ",
+                        "quantity": 20.0
+                    },
+                    {
+                        "stock": "PFE",
+                        "quantity": 22.0
+                    },
+                    {
+                        "stock": "PG",
+                        "quantity": 24.0
+                    },
+                    {
+                        "stock": "KO",
+                        "quantity": 26.0
+                    }
+                ]
+            }
+        ]
+    },
+    "sanjay": {
+        "password": "sanjay2024",
+        "portfolios": [
+            {
+                "name": "tech_advantage",
+                "balance": 45800.21,
+                "stocks": [
+                    {
+                        "stock": "AAPL",
+                        "quantity": 28.0
+                    },
+                    {
+                        "stock": "MSFT",
+                        "quantity": 30.0
+                    },
+                    {
+                        "stock": "INTC",
+                        "quantity": 32.0
+                    },
+                    {
+                        "stock": "IBM",
+                        "quantity": 34.0
+                    }
+                ]
+            },
+            {
+                "name": "energy_focus",
+                "balance": 23400.55,
+                "stocks": [
+                    {
+                        "stock": "XOM",
+                        "quantity": 36.0
+                    },
+                    {
+                        "stock": "CVX",
+                        "quantity": 38.0
+                    },
+                    {
+                        "stock": "BA",
+                        "quantity": 40.0
+                    }
+                ]
+            }
+        ]
+    },
+    "meera": {
+        "password": "meeraMe2024",
+        "portfolios": [
+            {
+                "name": "balanced_portfolio",
+                "balance": 52000.88,
+                "stocks": [
+                    {
+                        "stock": "PG",
+                        "quantity": 17.0
+                    },
+                    {
+                        "stock": "JNJ",
+                        "quantity": 19.0
+                    },
+                    {
+                        "stock": "AAPL",
+                        "quantity": 21.0
+                    },
+                    {
+                        "stock": "MSFT",
+                        "quantity": 23.0
+                    }
+                ]
+            },
+            {
+                "name": "industrial_growth",
+                "balance": 30800.33,
+                "stocks": [
+                    {
+                        "stock": "CAT",
+                        "quantity": 25.0
+                    },
+                    {
+                        "stock": "BA",
+                        "quantity": 27.0
+                    },
+                    {
+                        "stock": "GE",
+                        "quantity": 29.0
+                    },
+                    {
+                        "stock": "MMM",
+                        "quantity": 31.0
+                    }
+                ]
+            }
+        ]
+    },
+    "rohit": {
+        "password": "rohitPower",
+        "portfolios": [
+            {
+                "name": "fast_growth",
+                "balance": 69000.12,
+                "stocks": [
+                    {
+                        "stock": "AAPL",
+                        "quantity": 24.0
+                    },
+                    {
+                        "stock": "MSFT",
+                        "quantity": 26.0
+                    },
+                    {
+                        "stock": "V",
+                        "quantity": 28.0
+                    },
+                    {
+                        "stock": "NKE",
+                        "quantity": 30.0
+                    }
+                ]
+            },
+            {
+                "name": "health_care",
+                "balance": 21500.76,
+                "stocks": [
+                    {
+                        "stock": "JNJ",
+                        "quantity": 32.0
+                    },
+                    {
+                        "stock": "PFE",
+                        "quantity": 34.0
+                    },
+                    {
+                        "stock": "MRK",
+                        "quantity": 36.0
+                    }
+                ]
+            }
+        ]
+    },
+    "neha": {
+        "password": "neha2024",
+        "portfolios": [
+            {
+                "name": "core_holdings",
+                "balance": 53000.65,
+                "stocks": [
+                    {
+                        "stock": "JPM",
+                        "quantity": 18.0
+                    },
+                    {
+                        "stock": "GS",
+                        "quantity": 20.0
+                    },
+                    {
+                        "stock": "V",
+                        "quantity": 22.0
+                    },
+                    {
+                        "stock": "WMT",
+                        "quantity": 24.0
+                    }
+                ]
+            },
+            {
+                "name": "tech_innovation",
+                "balance": 19000.89,
+                "stocks": [
+                    {
+                        "stock": "AAPL",
+                        "quantity": 26.0
+                    },
+                    {
+                        "stock": "MSFT",
+                        "quantity": 28.0
+                    },
+                    {
+                        "stock": "INTC",
+                        "quantity": 30.0
+                    },
+                    {
+                        "stock": "IBM",
+                        "quantity": 32.0
+                    }
+                ]
+            }
+        ]
+    },
+    "aditya": {
+        "password": "adi2024",
+        "portfolios": [
+            {
+                "name": "sustainable_investing",
+                "balance": 45000.5,
+                "stocks": [
+                    {
+                        "stock": "XOM",
+                        "quantity": 23.0
+                    },
+                    {
+                        "stock": "CVX",
+                        "quantity": 25.0
+                    },
+                    {
+                        "stock": "NKE",
+                        "quantity": 27.0
+                    },
+                    {
+                        "stock": "AAPL",
+                        "quantity": 29.0
+                    }
+                ]
+            },
+            {
+                "name": "consumer_focus",
+                "balance": 12000.77,
+                "stocks": [
+                    {
+                        "stock": "KO",
+                        "quantity": 31.0
+                    },
+                    {
+                        "stock": "PG",
+                        "quantity": 33.0
+                    },
+                    {
+                        "stock": "PFE",
+                        "quantity": 35.0
+                    },
+                    {
+                        "stock": "WMT",
+                        "quantity": 37.0
+                    }
+                ]
+            }
+        ]
+    },
+    "kritika": {
+        "password": "kriti2024",
+        "portfolios": [
+            {
+                "name": "value_investment",
+                "balance": 62000.99,
+                "stocks": [
+                    {
+                        "stock": "JPM",
+                        "quantity": 29.0
+                    },
+                    {
+                        "stock": "GS",
+                        "quantity": 31.0
+                    },
+                    {
+                        "stock": "VZ",
+                        "quantity": 33.0
+                    },
+                    {
+                        "stock": "TRV",
+                        "quantity": 35.0
+                    }
+                ]
+            }
+        ]
+    }
+}
