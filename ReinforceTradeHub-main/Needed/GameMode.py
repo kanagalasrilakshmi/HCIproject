@@ -11,7 +11,7 @@ import numpy as np
 import streamlit as st
 import json
 import hashlib
-from Sample import DQN,input_dim,output_dim,dow_30_list
+from ddpg import DQN,input_dim,output_dim,dow_30_list
 import numpy as np
 import gym
 import torch
@@ -506,7 +506,7 @@ if not st.session_state.get('game_over', False):
                                 st.plotly_chart(fig)
                                 # add LLM explanability component
                                 # access open ai 
-                                openai.api_key = os.getenv('rl')
+                                openai.api_key = os.getenv('RL_stream')
                                 data['Candle_Type'] = data.apply(get_candle_type, axis=1)
                                 patterns_text = ' '.join([f"On {index.date()}, there was a {row['Candle_Type']} candle." 
                                 for index, row in data.iterrows()])
