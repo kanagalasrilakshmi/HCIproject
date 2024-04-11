@@ -507,7 +507,6 @@ if not st.session_state.get('game_over', False):
                                 # add LLM explanability component
                                 # access open ai 
                                 openai.api_key = os.getenv('rl')
-                                #openai.api_key = "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"
                                 data['Candle_Type'] = data.apply(get_candle_type, axis=1)
                                 patterns_text = ' '.join([f"On {index.date()}, there was a {row['Candle_Type']} candle." 
                                 for index, row in data.iterrows()])
